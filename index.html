@@ -34,8 +34,8 @@ td:last-child{color:#777}
   <div class="section">
     <div class="head">记录详情</div>
     <table>
-      <tr><td>姓名</td><td>王焱</td></tr>
-      <tr><td>手机号</td><td>13864615553</td></tr>
+      <tr><td>姓名</td><td>王望屿</td></tr>
+      <tr><td>手机号</td><td>19819119997</td></tr>
       <tr><td>访问单位</td><td>资源与环境工程学院</td></tr>
       <tr><td>来访时间</td><td id="date"></td></tr>
       <tr><td>车辆车牌</td><td>鲁BAZ3981</td></tr>
@@ -53,7 +53,7 @@ td:last-child{color:#777}
         <div class="school">资源与环境工程学院</div>
       </div>
       <div class="line"><b>审核状态：</b>审批中</div>
-      <div class="line time">时间：2026-07-28 11:10:10</div>
+      <div class="line time">时间：<span id="pending-time"></span></div>
     </div>
 
     <div class="card">
@@ -63,16 +63,25 @@ td:last-child{color:#777}
       </div>
       <div class="line"><b>审核状态：</b>同意</div>
       <div class="line time">审核员：李明3</div>
-      <div class="line time">时间：2026-07-29 15:26:35</div>
+      <div class="line time">时间：<span id="audit-time"></span></div>
     </div>
   </div>
 </div>
 
 <script>
+function formatDate(d){
+  return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+}
+
 function update(){
-  let d=new Date();
-  document.getElementById("date").innerText=
-    d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+  const today=new Date();
+  const yesterday=new Date(today);
+  yesterday.setDate(yesterday.getDate()-1);
+
+  // 来访时间显示当天日期，底部两条审批记录显示当天日期的前一天
+  document.getElementById("date").innerText=formatDate(today);
+  document.getElementById("pending-time").innerText=formatDate(yesterday)+" 11:10:10";
+  document.getElementById("audit-time").innerText=formatDate(yesterday)+" 15:26:35";
 }
 update();
 setInterval(update,1000);
